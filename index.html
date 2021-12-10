@@ -7,6 +7,9 @@
     <title>Document</title>
   </head>
   <body>
+    <div id="info">
+
+    </div>
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -71,6 +74,9 @@
           });
           values.push({key:'ip',value:ip}); //把ip位置加入雜湊演算
           console.log(values);
+          for(let i = 0;i<values.length;i++){
+            $('#info').append(`<h3>${values[i]['key']}：${values[i]['value']}</h3>`)
+          }
           const id = Fingerprint2.x64hash128(values.join(""), 31); //MurmurHash3 非加密的雜湊演算法
           console.log(id);
         });
