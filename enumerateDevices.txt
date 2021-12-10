@@ -1,0 +1,16 @@
+enumerateDevices
+每次開啟新分頁都會有不一樣的值，用這個當參數產ID不可靠
+
+0: "id=;gid=cac717b5dc77fcda86b9500557c57654763ddd6c3e3a52d3176b897a98f1e644;audioinput;"
+1: "id=;gid=621b8fd085db314ec3d73f3a0a5427ee00c33a900e207751fca79e634f087214;videoinput;"
+2: "id=;gid=0202316d16a13ebdfffb8c4cc7bf181f5b54ae38abcccef35b2fc37f63d01c19;audiooutput;"
+
+
+0: "id=;gid=90454bd7885d44ede2f6957d611d1d0626232b7a1ebdf9c08f59c7011657564d;audioinput;"
+1: "id=;gid=57fb02ea2870fca9c0629e6110ad7573fa6c124497cdf9785d025b05337d92b0;videoinput;"
+2: "id=;gid=e1c1411f2164e45962acc66229df66fa05d64289ceaf773881d913da1a04fbe2;audiooutput;"
+
+
+0: "id=;gid=e1d047cb7c087345d0927bd1210d9f70cdd648b0561b19e6a7b3abc33a4d1d9c;audioinput;"
+1: "id=;gid=6fa275916f0545a882daf3961d1dce00826ac2e3c0573222ef50dbc28177d3fd;videoinput;"
+2: "id=;gid=a293990ae3ec571629e71cd9c748921eecdeec8e2449a584205b29cd2d12767f;audiooutput;"
