@@ -67,7 +67,7 @@
           EXCLUDED: "excluded",
         };
 
-        Fingerprint2.get({}, function (components) {
+        Fingerprint2.get(options, function (components) {
           const list = components.map(function (component) {
             return component;
           });
