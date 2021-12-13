@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>p3Dj9aCt04K9</title>
   </head>
   <body>
-    <div id="info">
-
-    </div>
+    <div id="info"></div>
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -47,13 +45,13 @@
           },
           extraComponents: [],
           excludes: {
-            // userAgent: true, //用戶代理字串 https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Headers/User-Agent
+            userAgent: true, //用戶代理字串 https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Headers/User-Agent
             openDatabase: true, //Chrome、Edge得到一樣的值，firefox的value為空陣列
-            // canvas: true, //由於系統的差別，字體渲染引擎不同，對抗鋸齒、次像素渲染等算法也不同，canvas將同樣的文字轉成圖片，得到的結果也是不同的。https://juejin.cn/post/6844903970180169742。https://browserleaks.com/canvas。渲染得到的圖片是以Data URL Base64編碼。
-            // webgl: true,
-            // webglVendorAndRenderer: true,
+            canvas: true, //由於系統的差別，字體渲染引擎不同，對抗鋸齒、次像素渲染等算法也不同，canvas將同樣的文字轉成圖片，得到的結果也是不同的。https://juejin.cn/post/6844903970180169742。https://browserleaks.com/canvas。渲染得到的圖片是以Data URL Base64編碼。
+            webgl: true,
+            webglVendorAndRenderer: true,
             // fonts: true,
-            audio: true, //Chrome、Edge得到一樣的值(124.04347527516)，firefox(35.7383295930922)。https://audiofingerprint.openwpm.com/
+            // audio: true, //Chrome、Edge得到一樣的值(124.04347527516)，firefox(35.7383295930922)。https://audiofingerprint.openwpm.com/
             deviceMemory: true,
             plugins: true,
             // fonts:true, //Chrome、Edge得到一樣的值(48種字體),firefox多了兩個
@@ -68,14 +66,20 @@
           ERROR: "error",
           EXCLUDED: "excluded",
         };
-        Fingerprint2.get(options, function (components) {
-          const values = components.map(function (component) {
+
+        Fingerprint2.get({}, function (components) {
+          const list = components.map(function (component) {
             return component;
           });
-          values.push({key:'ip',value:ip}); //把ip位置加入雜湊演算
+          const values = components.map(function (component) {
+            return component.value;
+          });
+          list.push({ key: "ip", value: ip });
+          values.push(ip); //把ip位置加入雜湊演算
+          console.log(list);
           console.log(values);
-          for(let i = 0;i<values.length;i++){
-            $('#info').append(`<h3>${values[i]['key']}：${values[i]['value']}</h3>`)
+          for (let i = 0; i < list.length; i++) {
+            $("#info").append(`<h3>${list[i]["key"]}:${list[i]["value"]}</h3>`);
           }
           const id = Fingerprint2.x64hash128(values.join(""), 31); //MurmurHash3 非加密的雜湊演算法
           console.log(id);
