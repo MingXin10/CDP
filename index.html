@@ -18,7 +18,7 @@
       async function getId() {
         let ip;
         await $.getJSON(
-          "https://api.ipify.org?format=jsonp&callback=?",
+          'https://api.ipify.org?format=jsonp&callback=?',
           function (data) {
             ip = data.ip; //取得ip位址
           }
@@ -30,8 +30,8 @@
             excludeIOS11: true,
           },
           fonts: {
-            swfContainerId: "fingerprintjs2",
-            swfPath: "flash/compiled/FontList.swf",
+            swfContainerId: 'fingerprintjs2',
+            swfPath: 'flash/compiled/FontList.swf',
             userDefinedFonts: [],
             extendedJsFonts: false,
           },
@@ -62,26 +62,26 @@
             enumerateDevices: true, //列出有哪些多媒體的input與output可以用～例如：webcam、microphone這些可以使用(http://cloverhsc.blogspot.com/2018/09/webrtc-2-enumeratedevices.html)，但是不可靠，開啟新的分頁都會有不一樣的值(https://github.com/fingerprintjs/fingerprintjs/issues/375)。
             //後五個是預設，但是有寫options要補回去
           },
-          NOT_AVAILABLE: "not available",
-          ERROR: "error",
-          EXCLUDED: "excluded",
+          NOT_AVAILABLE: 'not available',
+          ERROR: 'error',
+          EXCLUDED: 'excluded',
         };
 
-        Fingerprint2.get(options, function (components) {
+        Fingerprint2.get(function (components) {
           const list = components.map(function (component) {
             return component;
           });
           const values = components.map(function (component) {
             return component.value;
           });
-          list.push({ key: "ip", value: ip });
+          list.push({ key: 'ip', value: ip });
           values.push(ip); //把ip位置加入雜湊演算
           console.log(list);
           console.log(values);
           for (let i = 0; i < list.length; i++) {
-            $("#info").append(`<h3>${list[i]["key"]}:${list[i]["value"]}</h3>`);
+            $('#info').append(`<h3>${list[i]['key']}:${list[i]['value']}</h3>`);
           }
-          const id = Fingerprint2.x64hash128(values.join(""), 31); //MurmurHash3 非加密的雜湊演算法
+          const id = Fingerprint2.x64hash128(values.join(''), 31); //MurmurHash3 非加密的雜湊演算法
           console.log(id);
         });
       }
