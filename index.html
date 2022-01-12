@@ -82,6 +82,7 @@
             $('#info').append(`<h3>${list[i]['key']}:${list[i]['value']}</h3>`);
           }
           const id = Fingerprint2.x64hash128(values.join(''), 31); //MurmurHash3 非加密的雜湊演算法
+          $('#info').append(`<h3>${id}</h3>`);
           console.log(id);
         });
       }
