@@ -15,14 +15,21 @@
     ></script>
     <script src="//cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@2/dist/fingerprint2.min.js"></script>
     <script>
+      let iv_v6
+      $.get('https://www.cloudflare.com/cdn-cgi/trace', function (data) {
+        ip_v6 = data
+          .trim()
+          .split('\n')
+          .reduce(function (obj, pair) {
+            pair = pair.split('=')
+            return (obj[pair[0]] = pair[1]), obj
+          }, {}).ip
+      })
       async function getId() {
-        let ip;
-        await $.getJSON(
-          'https://api.ipify.org?format=jsonp&callback=?',
-          function (data) {
-            ip = data.ip; //取得ip位址
-          }
-        );
+        let ip
+        await $.getJSON('https://api.ipify.org?format=jsonp&callback=?', function (data) {
+          ip = data.ip //取得ip位址
+        })
         const options = {
           preprocessor: null,
           audio: {
@@ -47,9 +54,9 @@
           excludes: {
             userAgent: true, //用戶代理字串 https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Headers/User-Agent
             openDatabase: true, //Chrome、Edge得到一樣的值，firefox的value為空陣列
-            canvas: true, //由於系統的差別，字體渲染引擎不同，對抗鋸齒、次像素渲染等算法也不同，canvas將同樣的文字轉成圖片，得到的結果也是不同的。https://juejin.cn/post/6844903970180169742。https://browserleaks.com/canvas。渲染得到的圖片是以Data URL Base64編碼。
-            webgl: true,
-            webglVendorAndRenderer: true,
+            // canvas: true, //由於系統的差別，字體渲染引擎不同，對抗鋸齒、次像素渲染等算法也不同，canvas將同樣的文字轉成圖片，得到的結果也是不同的。https://juejin.cn/post/6844903970180169742。https://browserleaks.com/canvas。渲染得到的圖片是以Data URL Base64編碼。
+            // webgl: true,
+            // webglVendorAndRenderer: true,
             // fonts: true,
             // audio: true, //Chrome、Edge得到一樣的值(124.04347527516)，firefox(35.7383295930922)。https://audiofingerprint.openwpm.com/
             deviceMemory: true,
@@ -65,33 +72,32 @@
           NOT_AVAILABLE: 'not available',
           ERROR: 'error',
           EXCLUDED: 'excluded',
-        };
+        }
 
-        Fingerprint2.get(function (components) {
+        Fingerprint2.get(options, function (components) {
           const list = components.map(function (component) {
-            return component;
-          });
+            return component
+          })
           const values = components.map(function (component) {
-            return component.value;
-          });
-          list.push({ key: 'ip', value: ip });
-          values.push(ip); //把ip位置加入雜湊演算
-          console.log(list);
-          console.log(values);
+            return component
+          })
+          list.push({ key: 'ip', value: ip }, { key: 'ip_v6', value: ip_v6 })
+          values.push(ip) //把ip位置加入雜湊演算
+          console.log(list)
+          console.log(values)
           for (let i = 0; i < list.length; i++) {
-            $('#info').append(`<h3>${list[i]['key']}:${list[i]['value']}</h3>`);
+            $('#info').append(`<h3>${list[i]['key']}:${list[i]['value']}</h3>`)
           }
-          const id = Fingerprint2.x64hash128(values.join(''), 31); //MurmurHash3 非加密的雜湊演算法
-          $('#info').append(`<h3>${id}</h3>`);
-          console.log(id);
-        });
+          const id = Fingerprint2.x64hash128(values.join(''), 31) //MurmurHash3 非加密的雜湊演算法
+          console.log(id)
+        })
       }
     </script>
     <script>
       if (window.requestIdleCallback) {
-        requestIdleCallback(getId);
+        requestIdleCallback(getId)
       } else {
-        setTimeout(getId, 500);
+        setTimeout(getId, 500)
       }
       //"deviceMemory"，0.25,0.5,1,2,4,8。如果電腦裝8gb以上記憶體，則value為8，代表至少有8gb記憶體。
       //hardwareConcurrency 報告的值不一定是真實CPU核心數
