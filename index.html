@@ -81,7 +81,7 @@
           const values = components.map(function (component) {
             return component
           })
-          list.push({ key: 'ip', value: ip }, { key: 'ip_v6', value: ip_v6 })
+          list.unshift({ key: 'ip', value: ip }, { key: 'ip_v6', value: ip_v6 })
           values.push(ip) //把ip位置加入雜湊演算
           console.log(list)
           console.log(values)
