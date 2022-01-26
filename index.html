@@ -29,8 +29,13 @@
       .then((res) => res.text())
       .catch((error) => console.error('Error:', error))
       .then((data) => {
-        let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/
-        ip_v6 = data.match(ipRegex)[0]
+          ip_v6 = data
+          .trim()
+          .split('\n')
+          .reduce(function (obj, pair) {
+            pair = pair.split('=')
+            return (obj[pair[0]] = pair[1]), obj
+          }, {}).ip
       })
       async function getId() {
         let ip_v4
