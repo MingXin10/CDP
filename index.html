@@ -214,8 +214,10 @@
           let encrypt_data = ''
           let json_data = ''
           old_uuid = user_id.split(',')[1]
-          const expiration = (new Date().getTime() - JSON.parse(localStorage.getItem('dv')).create_time) / 1000
-          const quickly_visit = (new Date().getTime() - JSON.parse(localStorage.getItem('dv')).last_time) / 1000 < 3
+          const expiration =
+            (new Date().getTime() - JSON.parse(localStorage.getItem('dv')).create_time) / 1000
+          const quickly_visit =
+            (new Date().getTime() - JSON.parse(localStorage.getItem('dv')).last_time) / 1000 < 3
           const the_same_url = current_url === JSON.parse(localStorage.getItem('dv')).url
           encrypt_data = encrypt(`${fp_id},${old_uuid},${ip_v4},${ip_v6}`)
           json_data = JSON.stringify({
@@ -279,6 +281,7 @@
           console.log('error', error.message)
         }
       }
+      document.cookie = 'joey=jojo; expires=Tue, 19 Jan 2038 03:14:07 GMT'
     </script>
   </body>
 </html>
